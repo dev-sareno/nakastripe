@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nakastripe.DTO;
 using Nakastripe.DTO.CreateProduct;
+using Nakastripe.DTO.StripeDeleteSubscription;
 using Stripe;
 using Stripe.Checkout;
 
@@ -14,16 +15,19 @@ public class StripeController : ControllerBase
     private readonly SessionService _sessionService;
     private readonly PriceService _priceService;
     private readonly ProductService _productService;
+    private readonly SubscriptionService _subscriptionService;
 
     public StripeController(ILogger<StripeController> logger,
         SessionService sessionService,
         PriceService priceService,
-        ProductService productService)
+        ProductService productService,
+        SubscriptionService subscriptionService)
     {
         _logger = logger;
         _sessionService = sessionService;
         _priceService = priceService;
         _productService = productService;
+        _subscriptionService = subscriptionService;
     }
 
     [HttpPost("Product")]
@@ -104,6 +108,17 @@ public class StripeController : ControllerBase
         {
             SessionId = session.Id,
             CheckoutUrl = session.Url,
+            Subscription = session.SubscriptionId,
+        };
+    }
+
+    [HttpDelete("Subscription/{id}")]
+    public async Task<StripeDeleteSubscriptionResponseDto> DeleteSubscription(string id)
+    {
+        await _subscriptionService.CancelAsync(id);
+        return new StripeDeleteSubscriptionResponseDto
+        {
+            Message = "Subscription cancelled"
         };
     }
 }

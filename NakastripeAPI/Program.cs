@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<SessionService>();
 builder.Services.AddScoped<PriceService>();
+builder.Services.AddScoped<SubscriptionService>();
 
 var app = builder.Build();
 
