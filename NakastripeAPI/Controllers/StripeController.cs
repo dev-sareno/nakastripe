@@ -26,7 +26,7 @@ public class StripeController : ControllerBase
         _productService = productService;
     }
 
-    [HttpPost("Product/Create")]
+    [HttpPost("Product")]
     public async Task<StripeCreateProductResponseDto> CreateProduct(StripeCreateProductRequestDto body)
     {
         var productId = Guid.NewGuid().ToString();
@@ -79,7 +79,7 @@ public class StripeController : ControllerBase
         return await _priceService.ListAsync();
     }
 
-    [HttpPost("Session/Create")]
+    [HttpPost("Session")]
     public async Task<StripeCreateSessionResponseDto> CreateSession(StripeCreateSessionRequestDto body)
     {
         // Create Stripe Session https://docs.stripe.com/api/checkout/sessions

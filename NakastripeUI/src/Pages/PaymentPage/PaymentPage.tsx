@@ -17,14 +17,19 @@ const PaymentPage = () => {
   }, [id]);
 
   const buyClickHandler = async () => {
-    const response = await fetch(`${BaseUrl}/Stripe/CreateSession`, {
+    const registrationId = '2d43b807-4060-47e0-8a0d-e174c1b16170';
+    const recurringPaymentId = 'price_1OpsVFAiY5RMymXtGvHNAw6O';
+    const response = await fetch(`${BaseUrl}/Stripe/Session`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         customerEmail: 'john.doe@example.com',
-        price: product!.price
+        priceId: recurringPaymentId,
+        referenceId: registrationId,
+        successUrl: `http://localhost:3000/callback/payment/success?ref=${registrationId}`,
+        cancelUrl: `http://localhost:3000/callback/payment/cancelled?ref=${registrationId}`,
       }),
     });
     const data = await response.json();
