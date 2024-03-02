@@ -53,6 +53,11 @@ public class StripeController : ControllerBase
             Currency = "aud",
             UnitAmount = body.Price,
             Product = product.Id,
+            Recurring = new PriceRecurringOptions
+            {
+                Interval = "month",
+                IntervalCount = 1,
+            },
         });
 
         return new StripeCreateProductResponseDto
@@ -82,11 +87,9 @@ public class StripeController : ControllerBase
         {
             CustomerEmail = body.CustomerEmail,
             ClientReferenceId = body.ReferenceId,
-
-            SubmitType = "pay",
             SuccessUrl = body.SuccessUrl,
             CancelUrl = body.CancelUrl,
-            Mode = "payment",
+            Mode = "subscription",
             LineItems = new List<SessionLineItemOptions>
             {
                 new()
