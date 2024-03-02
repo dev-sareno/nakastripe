@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {loadStripe} from '@stripe/stripe-js';
+
+// const stripe = await loadStripe('');
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
